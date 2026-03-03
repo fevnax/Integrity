@@ -1,0 +1,184 @@
+.history-page {
+    min-height: 100vh;
+    background: var(--color-bg-primary);
+}
+
+.history-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 100px 24px 40px;
+}
+
+.history-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    gap: 16px;
+}
+
+.history-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+}
+
+.history-subtitle {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+}
+
+/* --- Loading --- */
+.history-loading {
+    display: flex;
+    justify-content: center;
+    padding: 80px 0;
+}
+
+/* --- Empty State --- */
+.history-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 64px 32px;
+    text-align: center;
+}
+
+.history-empty-icon {
+    color: var(--color-text-muted);
+    opacity: 0.4;
+}
+
+.history-empty h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+}
+
+.history-empty p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 8px;
+}
+
+/* --- List --- */
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.history-item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    transition: all 0.3s ease;
+}
+
+.history-item:hover {
+    box-shadow: var(--card-hover-shadow);
+    transform: translateY(-2px);
+}
+
+.history-item-main {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+    padding: 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.history-item-main:hover {
+    background: var(--color-bg-tertiary);
+}
+
+/* --- Risk Dot --- */
+.history-risk-dot {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.risk-dot-green {
+    background: linear-gradient(135deg, #22c55e, #86efac);
+}
+
+.risk-dot-yellow {
+    background: linear-gradient(135deg, #f59e0b, #fcd34d);
+}
+
+.risk-dot-red {
+    background: linear-gradient(135deg, #ef4444, #fca5a5);
+}
+
+/* --- Item Info --- */
+.history-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.history-item-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.history-item-brand {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+.history-item-date {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+}
+
+.history-item-arrow {
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+}
+
+/* --- Delete Button --- */
+.history-delete-btn {
+    color: var(--color-text-muted);
+    padding: 10px;
+    border-radius: 10px;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.history-delete-btn:hover {
+    color: var(--color-danger);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    .history-header {
+        flex-direction: column;
+    }
+
+    .history-title {
+        font-size: 1.3rem;
+    }
+}

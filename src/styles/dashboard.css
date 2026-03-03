@@ -1,0 +1,204 @@
+.dashboard-page {
+    min-height: 100vh;
+    background: var(--color-bg-primary);
+}
+
+.dashboard-container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 100px 24px 40px;
+}
+
+.dashboard-card {
+    padding: 40px 36px;
+}
+
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.dashboard-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin-bottom: 8px;
+}
+
+.dashboard-title-icon {
+    color: var(--color-accent);
+}
+
+.dashboard-subtitle {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+}
+
+/* --- Upload/Camera Buttons --- */
+.dashboard-actions {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.upload-btn,
+.camera-btn {
+    flex: 1;
+}
+
+.upload-btn {
+    padding: 14px 24px;
+}
+
+.camera-btn {
+    padding: 14px 24px;
+}
+
+/* --- Form Row --- */
+.dashboard-form-row {
+    margin-bottom: 20px;
+}
+
+/* --- Camera Preview --- */
+.camera-preview {
+    position: relative;
+    margin-bottom: 20px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid var(--color-accent);
+    animation: scaleIn 0.3s ease;
+}
+
+.camera-video {
+    width: 100%;
+    display: block;
+    border-radius: 14px;
+}
+
+.capture-btn {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* --- Drop Zone --- */
+.image-drop-zone {
+    border: 2px dashed var(--color-border-strong);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+    transition: all 0.3s ease;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-drop-zone.drag-over {
+    border-color: var(--color-accent);
+    background: var(--color-accent-light);
+}
+
+.image-drop-zone.has-image {
+    padding: 16px;
+    border-style: solid;
+    border-color: var(--color-accent);
+}
+
+.drop-zone-placeholder {
+    text-align: center;
+}
+
+.drop-zone-icon {
+    color: var(--color-text-muted);
+    margin-bottom: 12px;
+}
+
+.drop-zone-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 4px;
+}
+
+.drop-zone-hint {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+}
+
+/* --- Image Preview --- */
+.image-preview-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.image-preview {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.image-remove-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+}
+
+.image-remove-btn:hover {
+    background: var(--color-danger);
+    transform: scale(1.1);
+}
+
+/* --- Analyze Button --- */
+.analyze-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.05rem;
+}
+
+.analyze-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.analyze-btn.analyzing {
+    background: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+    box-shadow: none;
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    .dashboard-card {
+        padding: 24px 18px;
+    }
+
+    .dashboard-actions {
+        flex-direction: column;
+    }
+
+    .dashboard-title {
+        font-size: 1.3rem;
+    }
+}

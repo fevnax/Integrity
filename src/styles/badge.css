@@ -1,0 +1,52 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: capitalize;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+}
+
+.badge-allergen {
+    background: var(--color-badge-allergen);
+    color: var(--color-badge-allergen-text);
+}
+
+.badge-additive {
+    background: var(--color-badge-additive);
+    color: var(--color-badge-additive-text);
+}
+
+.badge-sweetener {
+    background: var(--color-badge-sweetener);
+    color: var(--color-badge-sweetener-text);
+}
+
+.badge-preservative {
+    background: var(--color-badge-preservative);
+    color: var(--color-badge-preservative-text);
+}
+
+.badge-filler {
+    background: var(--color-badge-filler);
+    color: var(--color-badge-filler-text);
+}
+
+.badge-spice {
+    background: var(--color-badge-spice);
+    color: var(--color-badge-spice-text);
+}
+
+.badge-ingredient {
+    background: var(--color-badge-ingredient);
+    color: var(--color-badge-ingredient-text);
+}
+
+.badge-unknown {
+    background: var(--color-badge-unknown);
+    color: var(--color-badge-unknown-text);
+}

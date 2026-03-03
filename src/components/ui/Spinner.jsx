@@ -1,0 +1,16 @@
+import '../../styles/spinner.css';
+
+export default function Spinner({ size = 40, className = '' }) {
+    return (
+        <div className={`spinner-wrapper ${className}`}>
+            <svg className="spinner" width={size} height={size} viewBox="0 0 50 50">
+                <circle
+                    className="spinner-path"
+                    cx="25" cy="25" r="20"
+                    fill="none"
+                    strokeWidth="4"
+                />
+            </svg>
+        </div>
+    );
+}

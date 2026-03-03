@@ -1,0 +1,323 @@
+.analysis-page {
+    min-height: 100vh;
+    background: var(--color-bg-primary);
+}
+
+.analysis-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    gap: 16px;
+    color: var(--color-text-muted);
+}
+
+.analysis-container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 100px 24px 40px;
+}
+
+.analysis-back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 20px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    transition: all 0.2s;
+}
+
+.analysis-back-btn:hover {
+    background: var(--color-bg-tertiary);
+    color: var(--color-accent);
+}
+
+.analysis-result-card {
+    padding: 40px 36px;
+}
+
+/* --- Product Header --- */
+.analysis-product-header {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.analysis-product-name {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.analysis-brand {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* --- Summary Box with Risk Score --- */
+.analysis-summary-box {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 28px;
+    border-radius: 16px;
+    margin-bottom: 32px;
+}
+
+.summary-green {
+    background: linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(34, 197, 94, 0.02) 100%);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.summary-yellow {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(245, 158, 11, 0.02) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.summary-red {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(239, 68, 68, 0.02) 100%);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* --- Risk Score Circle --- */
+.risk-score-circle {
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.risk-green {
+    background: linear-gradient(135deg, #22c55e, #86efac);
+    color: #fff;
+}
+
+.risk-yellow {
+    background: linear-gradient(135deg, #f59e0b, #fcd34d);
+    color: #fff;
+}
+
+.risk-red {
+    background: linear-gradient(135deg, #ef4444, #fca5a5);
+    color: #fff;
+}
+
+.risk-score-value {
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+.risk-score-label {
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.analysis-summary-text {
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+}
+
+/* --- Confidence Warning --- */
+.analysis-confidence-warning {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 12px;
+    margin-bottom: 28px;
+    font-size: 0.88rem;
+    color: var(--color-warning);
+    font-weight: 500;
+}
+
+/* --- Sections --- */
+.analysis-section {
+    margin-bottom: 32px;
+}
+
+.analysis-section-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 16px;
+}
+
+/* --- Key Findings --- */
+.findings-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.finding-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--color-warning);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+/* --- Breakdown Grid --- */
+.breakdown-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    overflow: hidden;
+}
+
+.breakdown-card {
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.breakdown-card:hover {
+    box-shadow: var(--card-shadow);
+}
+
+.breakdown-card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.breakdown-icon {
+    flex-shrink: 0;
+}
+
+.breakdown-card-count {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    line-height: 1.1;
+}
+
+.breakdown-card-label {
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    font-weight: 500;
+}
+
+.breakdown-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.breakdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 0;
+    flex-wrap: wrap;
+}
+
+.breakdown-item-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    flex: 1;
+    min-width: 0;
+    word-break: break-word;
+    white-space: normal;
+}
+
+.breakdown-more {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    padding-top: 4px;
+}
+
+/* --- Allergens --- */
+.allergens-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.allergen-chip {
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    background: var(--color-badge-allergen);
+    color: var(--color-badge-allergen-text);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* --- Suggestions --- */
+.suggestions-list {
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+.suggestion-item {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: 6px;
+}
+
+/* --- Actions --- */
+.analysis-actions {
+    text-align: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+    margin-top: 8px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 600px) {
+    .analysis-result-card {
+        padding: 24px 18px;
+    }
+
+    .analysis-summary-box {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .analysis-product-name {
+        font-size: 1.4rem;
+    }
+
+    .breakdown-grid {
+        grid-template-columns: 1fr;
+    }
+}
