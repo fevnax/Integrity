@@ -16,6 +16,7 @@ export default function Navbar() {
     const isMobile = useMediaQuery('(max-width: 768px)');
     const [menuOpen, setMenuOpen] = useState(false);
     const [profileOpen, setProfileOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     const profileRef = useRef(null);
     const mobileMenuRef = useRef(null);
 
@@ -30,6 +31,12 @@ export default function Navbar() {
         };
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, []);
+
+    useEffect(() => {
+        const handleScroll = () => setScrolled(window.scrollY > 50);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
     const handleLogout = async () => {
@@ -53,7 +60,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="navbar glass" id="main-navbar">
+        <nav className={`navbar glass ${scrolled ? 'navbar-scrolled' : ''}`} id="main-navbar">
             <div className="container navbar-inner">
                 <Link to="/" className="navbar-brand" id="navbar-brand">
                     <img

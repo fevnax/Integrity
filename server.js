@@ -14,9 +14,19 @@ app.get('/api/health', (req, res) => {
     });
 });
 
-app.use(express.static(join(__dirname, 'dist')));
+app.use(express.static(join(__dirname, 'dist'), {
+    maxAge: '1d',
+    setHeaders: (res, filePath) => {
+        if (filePath.endsWith('.html')) {
+            res.setHeader('Cache-Control', 'no-cache');
+        }
+    }
+}));
 
-app.get('/{*path}', (req, res) => {
+app.use((req, res, next) => {
+    if (req.path.includes('.')) {
+        return res.status(404).send('Not found');
+    }
     res.sendFile(join(__dirname, 'dist', 'index.html'));
 });
 

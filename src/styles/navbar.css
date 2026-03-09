@@ -1,15 +1,34 @@
 .navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 48px);
+    max-width: 1200px;
     z-index: 1000;
     background: var(--navbar-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--color-border);
-    box-shadow: var(--navbar-shadow);
+    border: 1px solid var(--color-border);
+    border-radius: 35px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
     transition: all 0.3s ease;
+}
+
+.page-landing .navbar {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-color: transparent;
+    box-shadow: none;
+}
+
+.page-landing .navbar.navbar-scrolled {
+    background: var(--navbar-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-color: var(--color-border);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 }
 
 .navbar-inner {
