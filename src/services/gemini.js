@@ -4,7 +4,7 @@ const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 export async function analyzeIngredients(imageBase64, mimeType, providedProductName) {
   const textPart = {
-    text: `You are "ShopHealth Assistant" — an expert in food science, nutrition labels, and ingredient risk analysis.
+    text: `You are "Nutritional Analysis Engine" — an expert in food science, nutrition labels, and ingredient risk analysis.
 TASK: Analyse the provided image of a packaged food product's ingredients list.
 OPTIONAL CONTEXT: ${providedProductName ? `The user suggests the product name may be: "${providedProductName}". Use this only as a hint, never as a fact.` : 'No product name was provided.'}
 EXTRACTION RULES:
