@@ -4,7 +4,8 @@ import { Upload, Camera, Scan, X, Sparkles } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { analyzeIngredients } from '../services/gemini';
-import { saveAnalysis } from '../services/analysisStorage';
+import { saveAnalysis, checkCache, cacheAnalysis } from '../services/analysisStorage';
+import { calculateRiskScore } from '../services/riskCalculator';
 import Navbar from '../components/Navbar';
 import Spinner from '../components/ui/Spinner';
 import '../styles/dashboard.css';
@@ -19,6 +20,7 @@ export default function Dashboard() {
 
     const [image, setImage] = useState(null);
     const [imageDataUrl, setImageDataUrl] = useState(null);
+    const [brandName, setBrandName] = useState('');
     const [productName, setProductName] = useState('');
     const [analyzing, setAnalyzing] = useState(false);
     const [cameraActive, setCameraActive] = useState(false);
@@ -118,15 +120,52 @@ export default function Dashboard() {
             toast.warning('Please upload or capture an image first');
             return;
         }
+        if (!brandName.trim()) {
+            toast.warning('Please enter the brand/company name');
+            return;
+        }
+        if (!productName.trim()) {
+            toast.warning('Please enter the product name');
+            return;
+        }
         setAnalyzing(true);
         try {
-            console.log('[Integrity] Starting analysis...');
-            const result = await analyzeIngredients(image.base64, image.mimeType, productName.trim());
-            console.log('[Integrity] Analysis result received:', result?.product_name);
+            const cached = await checkCache(brandName.trim(), productName.trim());
+            let result;
+            let fromCache = false;
 
-            toast.success('Analysis complete!');
-            navigate('/analysis/local', {
-                state: { analysis: result, imagePreview: imageDataUrl }
+            if (cached) {
+                console.log('[Integrity] Using cached analysis');
+                result = cached;
+                fromCache = true;
+                toast.success('Analysis loaded from cache!');
+            } else {
+                console.log('[Integrity] Starting fresh analysis...');
+                result = await analyzeIngredients(image.base64, image.mimeType, productName.trim());
+                console.log('[Integrity] Analysis result received:', result?.product_name);
+
+                if (!result.product_name || result.product_name === 'Unknown Product') {
+                    result.product_name = productName.trim();
+                }
+                if (!result.brand) {
+                    result.brand = brandName.trim();
+                }
+            }
+
+            const riskResult = calculateRiskScore(result.ingredients || []);
+            console.log('[Integrity] Custom risk score:', riskResult.score, riskResult.badge);
+
+            result.risk_score = riskResult.score;
+            result.badge = riskResult.badge;
+            result.matched_harmful = riskResult.matchedIngredients;
+
+            if (!fromCache) {
+                cacheAnalysis(brandName.trim(), productName.trim(), result).catch(() => {});
+            }
+
+            if (!fromCache) toast.success('Analysis complete!');
+            navigate('/analysis/result', {
+                state: { analysis: result, imagePreview: imageDataUrl, fromCache }
             });
 
             createThumbnail(imageDataUrl, 200).then(thumbnail => {
@@ -209,7 +248,19 @@ export default function Dashboard() {
                         <input
                             type="text"
                             className="input-field"
-                            placeholder="Product name (optional — helps AI identify better)"
+                            placeholder="Brand / Company name *"
+                            value={brandName}
+                            onChange={(e) => setBrandName(e.target.value)}
+                            disabled={analyzing}
+                            id="brand-name-input"
+                        />
+                    </div>
+
+                    <div className="dashboard-form-row">
+                        <input
+                            type="text"
+                            className="input-field"
+                            placeholder="Product name *"
                             value={productName}
                             onChange={(e) => setProductName(e.target.value)}
                             disabled={analyzing}
@@ -266,7 +317,7 @@ export default function Dashboard() {
                     <button
                         className={`btn-primary analyze-btn ${analyzing ? 'analyzing' : ''}`}
                         onClick={handleAnalyze}
-                        disabled={analyzing || !image}
+                        disabled={analyzing || !image || !brandName.trim() || !productName.trim()}
                         id="analyze-btn"
                     >
                         {analyzing ? (

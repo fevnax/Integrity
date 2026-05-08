@@ -61,6 +61,8 @@ export default function AnalysisResult() {
     const allergens = ingredients.filter(i => i.is_allergen);
     const addedSugars = ingredients.filter(i => i.is_added_sugar);
     const preservatives = ingredients.filter(i => i.category === 'preservative');
+    const matchedHarmful = analysis.matched_harmful || [];
+    const fromCache = location.state?.fromCache || false;
 
     return (
         <div className="analysis-page" id="analysis-page">
@@ -75,6 +77,7 @@ export default function AnalysisResult() {
                     <div className="analysis-product-header">
                         <h1 className="analysis-product-name">
                             {analysis.product_name || 'Unknown Product'}
+                            {fromCache && <span className="cached-badge">Cached</span>}
                         </h1>
                         {analysis.brand && (
                             <p className="analysis-brand">{analysis.brand}</p>
@@ -223,6 +226,37 @@ export default function AnalysisResult() {
                                     <div className="breakdown-item" key={i}>
                                         <span className="breakdown-item-name">{ing.original}</span>
                                         <Badge category="sweetener">Sweetener</Badge>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {matchedHarmful.length > 0 && (
+                        <div className="analysis-section" id="harmful-section">
+                            <h2 className="analysis-section-title">
+                                <AlertTriangle size={20} style={{ color: 'var(--color-danger)' }} />
+                                Flagged Harmful Ingredients ({matchedHarmful.length})
+                            </h2>
+                            <div className="harmful-list">
+                                {matchedHarmful
+                                    .sort((a, b) => b.score - a.score)
+                                    .map((item, i) => (
+                                    <div className="harmful-item" key={i}>
+                                        <div className="harmful-item-header">
+                                            <span className="harmful-item-name">{item.ingredient}</span>
+                                            <span className={`harmful-score-badge ${
+                                                item.score >= 70 ? 'score-high' :
+                                                item.score >= 40 ? 'score-medium' : 'score-low'
+                                            }`}>
+                                                {item.score}/100
+                                            </span>
+                                        </div>
+                                        <div className="harmful-item-meta">
+                                            <Badge category={item.category}>{item.category}</Badge>
+                                            <span className="harmful-matched-as">Matched: {item.harmfulEntry}</span>
+                                        </div>
+                                        <p className="harmful-item-reason">{item.reason}</p>
                                     </div>
                                 ))}
                             </div>

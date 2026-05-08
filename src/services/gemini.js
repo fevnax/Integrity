@@ -11,27 +11,22 @@ EXTRACTION RULES:
 - Extract product name, brand, and barcode ONLY if visible or strongly implied by the image.
 - Perform OCR conservatively; if text is blurry, partial, or cut off, reduce confidence.
 - Preserve the original ingredient token exactly as written on the label.
+- Extract ALL ingredients, including sub-ingredients inside parentheses.
 INGREDIENT PARSING:
 For EACH ingredient:
 - original: exact label text
-- normalized: standardised food-science name
+- normalized: standardised food-science name (e.g. "E621" should be normalized to "Monosodium Glutamate")
 - category MUST be one of: "allergen", "additive", "sweetener", "preservative", "filler", "spice", "ingredient", "unknown"
 - is_allergen: true ONLY for confirmed allergens (milk, soy, nuts, gluten, egg, sesame, etc.)
 - is_added_sugar: true for sucrose, glucose syrup, fructose, maltodextrin, HFCS, etc.
-- e_number: populate ONLY if explicitly labelled
-- confidence: 0.0–1.0 per ingredient
+- e_number: populate if explicitly labelled OR if you know the standard E-number for the ingredient
+- confidence: 0.0-1.0 per ingredient
 ANALYSIS RULES:
 - Do NOT classify base food ingredients as additives.
 - Prefer false negatives over false positives.
 - If classification is uncertain, use "unknown".
 - Identify high sugar or high salt only when clearly supported.
-RISK SCORING:
-- risk_score: 0 (very healthy) → 100 (very unhealthy)
-- Consider additive load, allergens, ultra-processing, and added sugars.
-- badge MUST be one of:
-  - "green": minimal processing
-  - "yellow": moderate concerns
-  - "red": high health risk
+NOTE: Risk scoring is handled separately by custom algorithm. Set risk_score to 0 and badge to "green" as placeholders.
 CONFIDENCE:
 - confidence: overall confidence score from 0.0 to 1.0
 - confidence_low: true if OCR or inference reliability is low

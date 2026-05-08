@@ -12,35 +12,35 @@
 /* --- Custom Properties (Light Theme) --- */
 :root,
 [data-theme="light"] {
-  --color-bg-primary: #f8f9fc;
+  --color-bg-primary: #f9fafb;
   --color-bg-secondary: #ffffff;
-  --color-bg-tertiary: #f0f2f8;
-  --color-bg-hero: #eef2fa;
+  --color-bg-tertiary: #f3f4f6;
+  --color-bg-hero: #f0f1f3;
 
-  --color-text-primary: #1a1d2e;
-  --color-text-secondary: #4a5068;
-  --color-text-muted: #7c829d;
+  --color-text-primary: #081C15;
+  --color-text-secondary: #2D6A4F;
+  --color-text-muted: #6b8f7b;
   --color-text-inverse: #ffffff;
 
-  --color-accent: #4DA8DA;
-  --color-accent-hover: #3a92c4;
-  --color-accent-light: rgba(77, 168, 218, 0.12);
-  --color-accent-gradient: linear-gradient(135deg, #4DA8DA 0%, #7BC6E8 100%);
+  --color-accent: #40916C;
+  --color-accent-hover: #2D6A4F;
+  --color-accent-light: rgba(64, 145, 108, 0.12);
+  --color-accent-gradient: linear-gradient(135deg, #40916C 0%, #74C69D 100%);
 
   --color-success: #22c55e;
   --color-warning: #f59e0b;
   --color-danger: #ef4444;
   --color-info: #3b82f6;
 
-  --color-border: rgba(0, 0, 0, 0.08);
-  --color-border-strong: rgba(0, 0, 0, 0.15);
+  --color-border: rgba(27, 67, 50, 0.08);
+  --color-border-strong: rgba(27, 67, 50, 0.18);
 
-  --color-shadow: rgba(0, 0, 0, 0.06);
-  --color-shadow-strong: rgba(0, 0, 0, 0.12);
+  --color-shadow: rgba(27, 67, 50, 0.06);
+  --color-shadow-strong: rgba(27, 67, 50, 0.12);
 
   --glass-bg: rgba(255, 255, 255, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.4);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-shadow: 0 8px 32px rgba(27, 67, 50, 0.08);
 
   --color-risk-green: #22c55e;
   --color-risk-yellow: #f59e0b;
@@ -64,46 +64,46 @@
   --color-badge-unknown-text: #6b7280;
 
   --navbar-bg: rgba(255, 255, 255, 0.8);
-  --navbar-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --navbar-shadow: 0 1px 3px rgba(27, 67, 50, 0.06);
 
   --card-bg: #ffffff;
-  --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-  --card-hover-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  --card-shadow: 0 4px 24px rgba(27, 67, 50, 0.06);
+  --card-hover-shadow: 0 8px 40px rgba(27, 67, 50, 0.1);
 
-  --modal-overlay: rgba(0, 0, 0, 0.4);
+  --modal-overlay: rgba(8, 28, 21, 0.4);
 }
 
 /* --- Dark Theme --- */
 [data-theme="dark"] {
-  --color-bg-primary: #0f1119;
-  --color-bg-secondary: #1a1d2e;
-  --color-bg-tertiary: #232740;
-  --color-bg-hero: #141726;
+  --color-bg-primary: #121212;
+  --color-bg-secondary: #1a1a1a;
+  --color-bg-tertiary: #222222;
+  --color-bg-hero: #151515;
 
-  --color-text-primary: #e8eaf0;
-  --color-text-secondary: #a0a6c0;
-  --color-text-muted: #6b7194;
-  --color-text-inverse: #0f1119;
+  --color-text-primary: #e5e5e5;
+  --color-text-secondary: #a3a3a3;
+  --color-text-muted: #737373;
+  --color-text-inverse: #121212;
 
-  --color-accent: #5CBCE8;
-  --color-accent-hover: #7CCDF0;
-  --color-accent-light: rgba(92, 188, 232, 0.15);
-  --color-accent-gradient: linear-gradient(135deg, #5CBCE8 0%, #89D4F0 100%);
+  --color-accent: #74C69D;
+  --color-accent-hover: #95D5B2;
+  --color-accent-light: rgba(116, 198, 157, 0.12);
+  --color-accent-gradient: linear-gradient(135deg, #52B788 0%, #74C69D 100%);
 
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-strong: rgba(255, 255, 255, 0.15);
+  --color-border: rgba(255, 255, 255, 0.07);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
 
   --color-shadow: rgba(0, 0, 0, 0.3);
   --color-shadow-strong: rgba(0, 0, 0, 0.5);
 
-  --glass-bg: rgba(26, 29, 46, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-bg: rgba(26, 26, 26, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.06);
   --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 
-  --navbar-bg: rgba(15, 17, 25, 0.85);
+  --navbar-bg: rgba(18, 18, 18, 0.88);
   --navbar-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 
-  --card-bg: #1a1d2e;
+  --card-bg: #1a1a1a;
   --card-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
   --card-hover-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
 
@@ -227,7 +227,7 @@ ul, ol {
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(77, 168, 218, 0.3);
+  box-shadow: 0 4px 15px rgba(64, 145, 108, 0.3);
   position: relative;
   overflow: hidden;
 }
@@ -243,7 +243,7 @@ ul, ol {
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(77, 168, 218, 0.4);
+  box-shadow: 0 6px 25px rgba(64, 145, 108, 0.4);
 }
 
 .btn-primary:hover::before {
