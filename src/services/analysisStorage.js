@@ -7,7 +7,6 @@ import {
     doc,
     setDoc,
     query,
-    where,
     orderBy,
     serverTimestamp,
     deleteDoc,
@@ -48,26 +47,6 @@ function stringSimilarity(a, b) {
     return 1 - levenshtein(a, b) / maxLen;
 }
 
-function ingredientSimilarity(ingredientsA, ingredientsB) {
-    if (!ingredientsA?.length || !ingredientsB?.length) return 0;
-    const setA = new Set(ingredientsA.map(n => n.toLowerCase().trim()));
-    const setB = new Set(ingredientsB.map(n => n.toLowerCase().trim()));
-    let matches = 0;
-    for (const item of setA) {
-        if (setB.has(item)) {
-            matches++;
-        } else {
-            for (const b of setB) {
-                if (stringSimilarity(item, b) >= 0.85) {
-                    matches++;
-                    break;
-                }
-            }
-        }
-    }
-    const union = new Set([...setA, ...setB]).size;
-    return union === 0 ? 0 : matches / union;
-}
 
 export async function checkCache(brand, productName) {
     if (!brand || !productName) return null;
@@ -81,7 +60,7 @@ export async function checkCache(brand, productName) {
         const snapshot = await getDocs(allQ);
 
         if (snapshot.empty) {
-            console.log('[Integrity] Cache empty — MISS');
+            console.log('[Integrity] Cache empty - MISS');
             return null;
         }
 
@@ -98,7 +77,7 @@ export async function checkCache(brand, productName) {
             let score = brandSim * 0.3 + productSim * 0.7;
 
             if (productSim >= 0.9 && brandSim >= 0.8) {
-                console.log(`[Integrity] Cache HIT (strong: brand=${(brandSim*100).toFixed(0)}% product=${(productSim*100).toFixed(0)}%) for: ${brand} - ${productName}`);
+                console.log(`[Integrity] Cache HIT (strong: brand=${(brandSim * 100).toFixed(0)}% product=${(productSim * 100).toFixed(0)}%) for: ${brand} - ${productName}`);
                 return data.analysisData;
             }
 
@@ -113,7 +92,7 @@ export async function checkCache(brand, productName) {
         }
 
         if (bestMatch) {
-            console.log(`[Integrity] Cache HIT (fuzzy: score=${(bestScore*100).toFixed(0)}%) for: ${brand} - ${productName}`);
+            console.log(`[Integrity] Cache HIT (fuzzy: score=${(bestScore * 100).toFixed(0)}%) for: ${brand} - ${productName}`);
             return bestMatch.analysisData;
         }
 
@@ -154,8 +133,15 @@ export async function cacheAnalysis(brand, productName, analysisData) {
 
 export async function saveAnalysis(userId, analysisData, imageDataUrl) {
     const analysesRef = collection(db, 'users', userId, 'analyses');
+    const cleanData = { ...analysisData };
+    delete cleanData.matched_harmful;
+    delete cleanData.imagePreview;
+
+    // Strip undefined values which Firestore rejects
+    const sanitized = JSON.parse(JSON.stringify(cleanData));
+
     const docRef = await addDoc(analysesRef, {
-        ...analysisData,
+        ...sanitized,
         imagePreview: imageDataUrl || null,
         createdAt: serverTimestamp()
     });

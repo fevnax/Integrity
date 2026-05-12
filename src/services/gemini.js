@@ -4,7 +4,7 @@ const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
 export async function analyzeIngredients(imageBase64, mimeType, providedProductName) {
   const textPart = {
-    text: `You are "Nutritional Analysis Engine" — an expert in food science, nutrition labels, and ingredient risk analysis.
+    text: `You are "Nutritional Analysis Engine" - an expert in food science, nutrition labels, and ingredient risk analysis.
 TASK: Analyse the provided image of a packaged food product's ingredients list.
 OPTIONAL CONTEXT: ${providedProductName ? `The user suggests the product name may be: "${providedProductName}". Use this only as a hint, never as a fact.` : 'No product name was provided.'}
 EXTRACTION RULES:
@@ -75,20 +75,55 @@ Do NOT include markdown or explanatory text.`
     }
   };
 
-  try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
-      contents: { parts: [textPart, imagePart] },
-      config: {
-        responseMimeType: 'application/json',
-        responseSchema: schema
-      }
-    });
+  const MAX_RETRIES = 2;
 
-    const jsonString = response.text.trim();
-    return JSON.parse(jsonString);
-  } catch (error) {
-    console.error('Gemini API error:', error);
-    throw new Error('Failed to analyze the image. Please try again with a clearer image.');
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    try {
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: { parts: [textPart, imagePart] },
+        config: {
+          temperature: 0,
+          responseMimeType: 'application/json',
+          responseSchema: schema
+        }
+      });
+
+      const jsonString = response.text.trim();
+      return JSON.parse(jsonString);
+    } catch (error) {
+      console.error(`[Integrity] Gemini API error (attempt ${attempt + 1}/${MAX_RETRIES + 1}):`, error?.message || error);
+
+      // Don't retry on non-transient errors
+      const status = error?.status || error?.httpStatusCode;
+      const msg = (error?.message || '').toLowerCase();
+
+      if (status === 429 || msg.includes('quota') || msg.includes('rate')) {
+        if (attempt < MAX_RETRIES) {
+          console.log(`[Integrity] Rate limited - retrying in 2s...`);
+          await new Promise(r => setTimeout(r, 2000));
+          continue;
+        }
+        throw new Error('API rate limit reached. Please wait a moment and try again.');
+      }
+
+      if (msg.includes('network') || msg.includes('fetch') || msg.includes('timeout')) {
+        if (attempt < MAX_RETRIES) {
+          console.log(`[Integrity] Network error - retrying in 1.5s...`);
+          await new Promise(r => setTimeout(r, 1500));
+          continue;
+        }
+        throw new Error('Network error. Please check your connection and try again.');
+      }
+
+      // For any other error, retry once then give up
+      if (attempt < MAX_RETRIES) {
+        console.log(`[Integrity] Unexpected error - retrying in 1.5s...`);
+        await new Promise(r => setTimeout(r, 1500));
+        continue;
+      }
+
+      throw new Error('Analysis failed. Please try again.');
+    }
   }
 }

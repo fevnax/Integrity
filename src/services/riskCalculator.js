@@ -73,10 +73,19 @@ export function calculateRiskScore(ingredients) {
     }
   }
 
+  // Deduplicate matched ingredients so the same harmful entry doesn't appear multiple times
+  const uniqueMap = new Map();
+  for (const match of matchedIngredients) {
+    if (!uniqueMap.has(match.harmfulEntry)) {
+      uniqueMap.set(match.harmfulEntry, match);
+    }
+  }
+  const uniqueMatchedIngredients = Array.from(uniqueMap.values());
+
   let finalScore = 0;
 
-  if (matchedIngredients.length > 0) {
-    const sortedScores = matchedIngredients
+  if (uniqueMatchedIngredients.length > 0) {
+    const sortedScores = uniqueMatchedIngredients
       .map(m => m.score)
       .sort((a, b) => b - a);
 
@@ -89,9 +98,9 @@ export function calculateRiskScore(ingredients) {
     const totalWeight = sortedScores.reduce((sum, _, i) => sum + 1 / (i + 1), 0);
     const weightedAvg = weightedSum / totalWeight;
 
-    const densityPenalty = Math.min(15, (matchedIngredients.length / ingredients.length) * 30);
+    const densityPenalty = Math.min(15, (uniqueMatchedIngredients.length / ingredients.length) * 30);
 
-    const countPenalty = Math.min(10, matchedIngredients.length * 1.5);
+    const countPenalty = Math.min(10, uniqueMatchedIngredients.length * 1.5);
 
     finalScore = Math.round(
       topScore * 0.45 +
@@ -111,7 +120,7 @@ export function calculateRiskScore(ingredients) {
   return {
     score: finalScore,
     badge,
-    matchedIngredients,
+    matchedIngredients: uniqueMatchedIngredients,
     unmatchedCount
   };
 }

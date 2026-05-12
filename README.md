@@ -4,13 +4,13 @@ AI-powered food ingredient scanner that analyzes packaged food labels and provid
 
 ## Features
 
-- 📸 **Scan Ingredients** — Upload or capture images of food ingredient labels
-- 🧠 **AI Analysis** — Gemini 2.5 Flash extracts and classifies every ingredient
-- 🎯 **Risk Scoring** — 0–100 health risk score with green/yellow/red badges
-- 🔍 **Ingredient Breakdown** — Categorizes additives, allergens, sweeteners, preservatives
-- 📂 **History** — All past scans saved and accessible
-- 🔐 **Authentication** — Email/password and Google OAuth
-- 🌙 **Dark Mode** — Light and dark theme support
+- 📸 **Scan Ingredients** - Upload or capture images of food ingredient labels
+- 🧠 **AI Analysis** - Gemini 2.5 Flash extracts and classifies every ingredient
+- 🎯 **Risk Scoring** - 0–100 health risk score with green/yellow/red badges
+- 🔍 **Ingredient Breakdown** - Categorizes additives, allergens, sweeteners, preservatives
+- 📂 **History** - All past scans saved and accessible
+- 🔐 **Authentication** - Email/password and Google OAuth
+- 🌙 **Dark Mode** - Light and dark theme support
 
 ## Tech Stack
 
@@ -61,10 +61,10 @@ AI-powered food ingredient scanner that analyzes packaged food labels and provid
 npm run build
 ```
 
-Output is in `dist/`. Deploy to Vercel, Render, or Netlify — set the environment variables in the service dashboard.
+Output is in `dist/`. Deploy to Vercel, Render, or Netlify - set the environment variables in the service dashboard.
 
 ## Creators
 
-- **Vedant P.** — [GitHub](https://github.com/Vp9191) · [LinkedIn](https://www.linkedin.com/in/vedant-link)
-- **Harshvardhan P.** — [GitHub](https://github.com/fevnax) · [LinkedIn](https://www.linkedin.com/in/fevnax)
-- **Ritik J.** — [GitHub](https://github.com/Ritikjagtap11) · [LinkedIn](https://linkedin.com/in/ritik-jagtap-link)
+- **Vedant P.** - [GitHub](https://github.com/Vp9191) · [LinkedIn](https://www.linkedin.com/in/vedant-link)
+- **Harshvardhan P.** - [GitHub](https://github.com/fevnax) · [LinkedIn](https://www.linkedin.com/in/fevnax)
+- **Ritik J.** - [GitHub](https://github.com/Ritikjagtap11) · [LinkedIn](https://linkedin.com/in/ritik-jagtap-link)

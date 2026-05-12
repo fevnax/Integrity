@@ -23,7 +23,7 @@ const features = [
     {
         icon: ListChecks,
         title: 'Ingredient Breakdown',
-        description: 'See a categorized breakdown of all ingredients — additives, preservatives, fillers, allergens, and sugars.',
+        description: 'See a categorized breakdown of all ingredients - additives, preservatives, fillers, allergens, and sugars.',
         color: '#22c55e'
     },
     {

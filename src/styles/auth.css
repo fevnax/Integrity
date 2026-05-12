@@ -162,6 +162,73 @@
     text-decoration: underline;
 }
 
+.auth-forgot {
+    text-align: center;
+    margin-top: 12px;
+}
+
+.auth-link-btn {
+    background: none;
+    border: none;
+    color: var(--color-accent);
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 4px 0;
+    transition: opacity 0.2s;
+}
+
+.auth-link-btn:hover {
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.reset-form {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.reset-description {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.auth-action-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.auth-action-success-icon {
+    color: var(--color-accent);
+}
+
+.auth-action-error-icon {
+    color: var(--color-danger);
+}
+
+.auth-action-msg {
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+.auth-error-inline {
+    font-size: 0.85rem;
+    color: var(--color-danger);
+    text-align: center;
+    padding: 8px 12px;
+    background: rgba(239, 68, 68, 0.08);
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+
 @media (max-width: 480px) {
     .auth-card {
         padding: 28px 20px;

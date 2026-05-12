@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
@@ -12,9 +12,16 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { logIn, logInWithGoogle } = useAuth();
+    const [showReset, setShowReset] = useState(false);
+    const [resetEmail, setResetEmail] = useState('');
+    const [resetLoading, setResetLoading] = useState(false);
+    const { user, logIn, logInWithGoogle, resetPassword } = useAuth();
     const toast = useToast();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) navigate('/dashboard', { replace: true });
+    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -128,6 +135,60 @@ export default function Login() {
                             {loading ? <Spinner size={22} /> : 'Log In'}
                         </button>
                     </form>
+
+                    <div className="auth-forgot">
+                        <button
+                            className="auth-link-btn"
+                            onClick={() => setShowReset(!showReset)}
+                            type="button"
+                        >
+                            {showReset ? 'Back to login' : 'Forgot password?'}
+                        </button>
+                    </div>
+
+                    {showReset && (
+                        <div className="reset-form">
+                            <p className="reset-description">Enter your email and we'll send a reset link.</p>
+                            <div className="input-group">
+                                <Mail size={18} className="input-icon" />
+                                <input
+                                    type="email"
+                                    className="input-field input-with-icon"
+                                    placeholder="Email Address"
+                                    value={resetEmail}
+                                    onChange={(e) => setResetEmail(e.target.value)}
+                                    id="reset-email"
+                                />
+                            </div>
+                            <button
+                                className="btn-primary auth-submit-btn"
+                                disabled={resetLoading}
+                                onClick={async () => {
+                                    if (!resetEmail.trim()) {
+                                        toast.warning('Please enter your email');
+                                        return;
+                                    }
+                                    setResetLoading(true);
+                                    try {
+                                        await resetPassword(resetEmail.trim());
+                                        toast.success('Password reset email sent! Check your inbox.');
+                                        setShowReset(false);
+                                        setResetEmail('');
+                                    } catch (err) {
+                                        const msg = err.code === 'auth/user-not-found'
+                                            ? 'No account found with that email.'
+                                            : 'Failed to send reset email. Try again.';
+                                        toast.error(msg);
+                                    } finally {
+                                        setResetLoading(false);
+                                    }
+                                }}
+                                id="reset-submit"
+                            >
+                                {resetLoading ? <Spinner size={22} /> : 'Send Reset Link'}
+                            </button>
+                        </div>
+                    )}
 
                     <p className="auth-footer-text">
                         Don&apos;t have an account?{' '}

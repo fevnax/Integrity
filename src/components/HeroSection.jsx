@@ -27,7 +27,7 @@ export default function HeroSection() {
                 <p className="hero-subtitle animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                     Scan, detect, and evaluate food product ingredients instantly with AI.
                     Get detailed health risk scores, allergen alerts, and additive breakdowns
-                    — all from a single photo of the ingredients label.
+                    - all from a single photo of the ingredients label.
                 </p>
 
                 <div className="hero-cta animate-fade-in-up" style={{ animationDelay: '0.3s' }}>

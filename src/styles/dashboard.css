@@ -168,6 +168,30 @@
     transform: scale(1.1);
 }
 
+/* --- Fresh Analysis Toggle --- */
+.fresh-analysis-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    padding: 8px 0;
+    user-select: none;
+}
+
+.fresh-analysis-toggle input[type="checkbox"] {
+    accent-color: var(--color-accent);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.fresh-analysis-hint {
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+}
+
 /* --- Analyze Button --- */
 .analyze-btn {
     width: 100%;

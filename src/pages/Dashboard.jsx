@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Upload, Camera, Scan, X, Sparkles } from 'lucide-react';
+import { Upload, Camera, Scan, X, Sparkles, RefreshCw } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { analyzeIngredients } from '../services/gemini';
@@ -25,6 +25,7 @@ export default function Dashboard() {
     const [analyzing, setAnalyzing] = useState(false);
     const [cameraActive, setCameraActive] = useState(false);
     const [dragOver, setDragOver] = useState(false);
+    const [skipCache, setSkipCache] = useState(false);
 
     const processFile = (file) => {
         if (!file || !file.type.startsWith('image/')) {
@@ -134,22 +135,20 @@ export default function Dashboard() {
             let result;
             let fromCache = false;
 
-            if (cached) {
+            if (cached && !skipCache) {
                 console.log('[Integrity] Using cached analysis');
                 result = cached;
                 fromCache = true;
                 toast.success('Analysis loaded from cache!');
             } else {
+                if (skipCache) console.log('[Integrity] Cache bypassed by user');
                 console.log('[Integrity] Starting fresh analysis...');
                 result = await analyzeIngredients(image.base64, image.mimeType, productName.trim());
                 console.log('[Integrity] Analysis result received:', result?.product_name);
 
-                if (!result.product_name || result.product_name === 'Unknown Product') {
-                    result.product_name = productName.trim();
-                }
-                if (!result.brand) {
-                    result.brand = brandName.trim();
-                }
+                // Always use user-provided names - they're more reliable than AI guesses
+                result.product_name = productName.trim();
+                result.brand = brandName.trim();
             }
 
             const riskResult = calculateRiskScore(result.ingredients || []);
@@ -160,18 +159,18 @@ export default function Dashboard() {
             result.matched_harmful = riskResult.matchedIngredients;
 
             if (!fromCache) {
-                cacheAnalysis(brandName.trim(), productName.trim(), result).catch(() => {});
+                cacheAnalysis(brandName.trim(), productName.trim(), result).catch(() => { });
             }
 
             if (!fromCache) toast.success('Analysis complete!');
+
+            const thumbnail = await createThumbnail(imageDataUrl, 200);
+            saveAnalysis(user.uid, result, thumbnail)
+                .then(id => console.log('[Integrity] Saved to Firestore:', id))
+                .catch(err => console.warn('[Integrity] Firestore save failed:', err.message));
+
             navigate('/analysis/result', {
                 state: { analysis: result, imagePreview: imageDataUrl, fromCache }
-            });
-
-            createThumbnail(imageDataUrl, 200).then(thumbnail => {
-                saveAnalysis(user.uid, result, thumbnail)
-                    .then(id => console.log('[Integrity] Saved to Firestore:', id))
-                    .catch(err => console.warn('[Integrity] Firestore save failed:', err.message));
             });
         } catch (err) {
             console.error('[Integrity] Analysis error:', err);
@@ -313,6 +312,17 @@ export default function Dashboard() {
                             </div>
                         )}
                     </div>
+
+                    <label className="fresh-analysis-toggle" id="fresh-analysis-toggle">
+                        <input
+                            type="checkbox"
+                            checked={skipCache}
+                            onChange={(e) => setSkipCache(e.target.checked)}
+                        />
+                        <RefreshCw size={14} />
+                        <span>Fresh analysis</span>
+                        <span className="fresh-analysis-hint">(skip cache for different variants)</span>
+                    </label>
 
                     <button
                         className={`btn-primary analyze-btn ${analyzing ? 'analyzing' : ''}`}

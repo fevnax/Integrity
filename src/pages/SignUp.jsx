@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
@@ -13,9 +13,13 @@ export default function SignUp() {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { signUp, logInWithGoogle } = useAuth();
+    const { user, signUp, logInWithGoogle } = useAuth();
     const toast = useToast();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (user) navigate('/dashboard', { replace: true });
+    }, [user]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -30,7 +34,7 @@ export default function SignUp() {
         setLoading(true);
         try {
             await signUp(email, password, name.trim());
-            toast.success('Account created successfully!');
+            toast.success('Account created! Check your email to verify.');
             navigate('/dashboard');
         } catch (err) {
             const msg = err.code === 'auth/email-already-in-use'

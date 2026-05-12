@@ -9,7 +9,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'logo-light.png', 'logo-dark.png', 'logo-192.png', 'logo-512.png'],
       manifest: {
-        name: 'Integrity — AI Ingredient Analyzer',
+        name: 'Integrity - AI Ingredient Analyzer',
         short_name: 'Integrity',
         description: 'AI-powered food ingredient scanner and health risk analyzer',
         theme_color: '#4DA8DA',

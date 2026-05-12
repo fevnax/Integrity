@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import AnalysisResult from './pages/AnalysisResult';
 import AnalysisHistory from './pages/AnalysisHistory';
+import AuthAction from './pages/AuthAction';
+import NotFound from './pages/NotFound';
 import ProtectedRoute from './ProtectedRoute';
 
 export default function App() {
@@ -13,6 +15,7 @@ export default function App() {
             <Route path="/" element={<Landing />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/auth/action" element={<AuthAction />} />
             <Route
                 path="/dashboard"
                 element={
@@ -45,6 +48,7 @@ export default function App() {
                     </ProtectedRoute>
                 }
             />
+            <Route path="*" element={<NotFound />} />
         </Routes>
     );
 }

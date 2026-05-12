@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Trash2, ChevronRight, ClipboardList, Scan } from 'lucide-react';
+import { Trash2, ChevronRight, ClipboardList, Scan, Search, Filter } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 import { getAnalyses, deleteAnalysis } from '../services/analysisStorage';
@@ -17,6 +17,8 @@ export default function AnalysisHistory() {
     const [loading, setLoading] = useState(true);
     const [deleteId, setDeleteId] = useState(null);
     const [deleting, setDeleting] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [riskFilter, setRiskFilter] = useState('all');
 
     useEffect(() => {
         if (user) {
@@ -66,6 +68,20 @@ export default function AnalysisHistory() {
         });
     };
 
+    const filteredAnalyses = analyses.filter(item => {
+        const q = searchQuery.toLowerCase().trim();
+        const matchesSearch = !q
+            || (item.product_name || '').toLowerCase().includes(q)
+            || (item.brand || '').toLowerCase().includes(q);
+
+        const matchesRisk = riskFilter === 'all'
+            || (riskFilter === 'green' && item.risk_score <= 30)
+            || (riskFilter === 'yellow' && item.risk_score > 30 && item.risk_score <= 60)
+            || (riskFilter === 'red' && item.risk_score > 60);
+
+        return matchesSearch && matchesRisk;
+    });
+
     return (
         <div className="history-page" id="history-page">
             <Navbar />
@@ -78,7 +94,7 @@ export default function AnalysisHistory() {
                         </h1>
                         <p className="history-subtitle">
                             {analyses.length > 0
-                                ? `${analyses.length} product${analyses.length !== 1 ? 's' : ''} analyzed`
+                                ? `${filteredAnalyses.length} of ${analyses.length} product${analyses.length !== 1 ? 's' : ''}`
                                 : 'Your analysis history will appear here'}
                         </p>
                     </div>
@@ -88,9 +104,45 @@ export default function AnalysisHistory() {
                     </Link>
                 </div>
 
+                {analyses.length > 0 && (
+                    <div className="history-filters">
+                        <div className="history-search-wrapper">
+                            <Search size={18} className="history-search-icon" />
+                            <input
+                                type="text"
+                                className="history-search-input"
+                                placeholder="Search by product or brand..."
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                id="history-search"
+                            />
+                        </div>
+                        <div className="history-risk-filter-wrapper">
+                            <Filter size={16} className="history-filter-icon" />
+                            <select
+                                className="history-risk-filter"
+                                value={riskFilter}
+                                onChange={(e) => setRiskFilter(e.target.value)}
+                                id="history-risk-filter"
+                            >
+                                <option value="all">All Risks</option>
+                                <option value="green">Low (0–30)</option>
+                                <option value="yellow">Moderate (31–60)</option>
+                                <option value="red">High (61–100)</option>
+                            </select>
+                        </div>
+                    </div>
+                )}
+
                 {loading ? (
                     <div className="history-loading">
                         <Spinner size={48} />
+                    </div>
+                ) : filteredAnalyses.length === 0 && analyses.length > 0 ? (
+                    <div className="history-empty glass-card">
+                        <Search size={56} className="history-empty-icon" />
+                        <h3>No matching results</h3>
+                        <p>Try a different search term or filter</p>
                     </div>
                 ) : analyses.length === 0 ? (
                     <div className="history-empty glass-card">
@@ -104,7 +156,7 @@ export default function AnalysisHistory() {
                     </div>
                 ) : (
                     <div className="history-list">
-                        {analyses.map((item) => (
+                        {filteredAnalyses.map((item) => (
                             <div
                                 className="history-item glass-card"
                                 key={item.id}
@@ -113,6 +165,7 @@ export default function AnalysisHistory() {
                                 <div
                                     className="history-item-main"
                                     onClick={() => navigate(`/analysis/${item.id}`)}
+                                    onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate(`/analysis/${item.id}`); } }}
                                     role="button"
                                     tabIndex={0}
                                 >

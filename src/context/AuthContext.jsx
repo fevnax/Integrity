@@ -5,7 +5,9 @@ import {
     signInWithPopup,
     signOut,
     onAuthStateChanged,
-    updateProfile
+    updateProfile,
+    sendPasswordResetEmail,
+    sendEmailVerification
 } from 'firebase/auth';
 import { auth, googleProvider } from '../services/firebase';
 
@@ -28,7 +30,15 @@ export function AuthProvider({ children }) {
         if (displayName) {
             await updateProfile(result.user, { displayName });
         }
+        await sendEmailVerification(result.user);
         return result;
+    };
+
+    const resendVerification = () => {
+        if (auth.currentUser && !auth.currentUser.emailVerified) {
+            return sendEmailVerification(auth.currentUser);
+        }
+        return Promise.resolve();
     };
 
     const logIn = (email, password) => {
@@ -43,8 +53,12 @@ export function AuthProvider({ children }) {
         return signOut(auth);
     };
 
+    const resetPassword = (email) => {
+        return sendPasswordResetEmail(auth, email);
+    };
+
     return (
-        <AuthContext.Provider value={{ user, loading, signUp, logIn, logInWithGoogle, logOut }}>
+        <AuthContext.Provider value={{ user, loading, signUp, logIn, logInWithGoogle, logOut, resetPassword, resendVerification }}>
             {children}
         </AuthContext.Provider>
     );
