@@ -405,22 +405,96 @@
 }
 
 /* --- Responsive --- */
-@media (max-width: 600px) {
-    .analysis-result-card {
-        padding: 24px 18px;
+@media (max-width: 768px) {
+    .analysis-container {
+        padding: 90px 16px 32px;
     }
 
-    .analysis-summary-box {
-        flex-direction: column;
-        text-align: center;
+    .analysis-result-card {
+        padding: 28px 20px;
     }
 
     .analysis-product-name {
         font-size: 1.4rem;
     }
 
+    .analysis-summary-box {
+        padding: 20px;
+        gap: 16px;
+    }
+
+    .risk-score-circle {
+        width: 72px;
+        height: 72px;
+        min-width: 72px;
+    }
+
+    .risk-score-value {
+        font-size: 1.3rem;
+    }
+
+    .analysis-summary-text {
+        font-size: 0.88rem;
+    }
+
+    .findings-chips {
+        gap: 8px;
+    }
+
+    .finding-chip {
+        font-size: 0.78rem;
+    }
+
+    .breakdown-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .analysis-container {
+        padding: 84px 12px 24px;
+    }
+
+    .analysis-result-card {
+        padding: 20px 14px;
+    }
+
+    .analysis-top-bar {
+        gap: 8px;
+    }
+
+    .analysis-back-btn,
+    .analysis-share-btn {
+        padding: 6px 10px;
+        font-size: 0.82rem;
+        gap: 4px;
+    }
+
+    .analysis-product-name {
+        font-size: 1.2rem;
+    }
+
+    .analysis-summary-box {
+        flex-direction: column;
+        text-align: center;
+        padding: 16px;
+    }
+
+    .analysis-section-title {
+        font-size: 1rem;
+    }
+
     .breakdown-grid {
         grid-template-columns: 1fr;
+    }
+
+    .harmful-item {
+        padding: 14px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
     }
 }
 

@@ -249,12 +249,126 @@
 }
 
 /* --- Responsive --- */
+@media (max-width: 768px) {
+    .history-container {
+        padding: 90px 16px 32px;
+    }
+}
+
 @media (max-width: 600px) {
+    .history-container {
+        padding: 80px 12px 24px;
+    }
+
     .history-header {
         flex-direction: column;
+        gap: 12px;
+    }
+
+    .history-header .btn-primary {
+        width: 100%;
+        justify-content: center;
     }
 
     .history-title {
         font-size: 1.3rem;
+        gap: 8px;
+    }
+
+    .history-subtitle {
+        font-size: 0.82rem;
+    }
+
+    .history-filters {
+        flex-direction: column;
+    }
+
+    .history-search-input {
+        font-size: 0.85rem;
+        padding: 9px 12px 9px 38px;
+    }
+
+    .history-risk-filter {
+        font-size: 0.85rem;
+        width: 100%;
+    }
+
+    .history-item {
+        padding: 6px;
+    }
+
+    .history-item-main {
+        gap: 12px;
+        padding: 10px;
+    }
+
+    .history-risk-dot {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        font-size: 0.78rem;
+    }
+
+    .history-item-name {
+        font-size: 0.88rem;
+    }
+
+    .history-item-brand {
+        font-size: 0.75rem;
+    }
+
+    .history-item-date {
+        font-size: 0.72rem;
+    }
+
+    .history-item-arrow {
+        display: none;
+    }
+
+    .history-delete-btn {
+        padding: 8px;
+    }
+
+    .history-list {
+        gap: 8px;
+    }
+}
+
+@media (max-width: 375px) {
+    .history-container {
+        padding: 76px 8px 20px;
+    }
+
+    .history-title {
+        font-size: 1.15rem;
+    }
+
+    .history-item-main {
+        gap: 10px;
+        padding: 8px;
+    }
+
+    .history-risk-dot {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        font-size: 0.72rem;
+    }
+
+    .history-item-name {
+        font-size: 0.82rem;
+    }
+
+    .history-delete-btn {
+        padding: 6px;
+    }
+
+    .history-delete-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .history-empty {
+        padding: 40px 16px;
     }
 }
