@@ -23,7 +23,7 @@ const creators = [
     {
         name: 'Ritik J.',
         github: 'https://github.com/Ritikjagtap11',
-        linkedin: 'https://linkedin.com/in/ritik-jagtap-link',
+        linkedin: 'https://linkedin.com/in/ritik-jagtap11',
         email: 'jagtapritik8@gmail.com',
         photo: '/creators/ritik.jpg',
         initials: 'RJ',
