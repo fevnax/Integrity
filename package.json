@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google/genai": "^1.43.0",
+    "@upstash/redis": "^1.38.2",
     "express": "^5.2.1",
     "firebase": "^11.3.0",
     "html2pdf.js": "^0.14.0",
