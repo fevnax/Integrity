@@ -5,18 +5,21 @@ import App from './App.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import { ToastProvider } from './context/ToastContext.jsx';
+import ErrorBoundary from './components/ErrorBoundary.jsx';
 import './styles/index.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <BrowserRouter>
-            <ThemeProvider>
-                <AuthProvider>
-                    <ToastProvider>
-                        <App />
-                    </ToastProvider>
-                </AuthProvider>
-            </ThemeProvider>
-        </BrowserRouter>
+        <ErrorBoundary>
+            <BrowserRouter>
+                <ThemeProvider>
+                    <AuthProvider>
+                        <ToastProvider>
+                            <App />
+                        </ToastProvider>
+                    </AuthProvider>
+                </ThemeProvider>
+            </BrowserRouter>
+        </ErrorBoundary>
     </React.StrictMode>
 );
